@@ -192,3 +192,23 @@
         - 客户端使用：需要加虚拟目录
           - 建议动态获取：req.getContextPath()
         - 服务器：不需要虚拟目录
+    
+  - 服务器输出字符数据到浏览器
+  
+    - ```java
+      //解决中文乱码
+      resp.setCharacterEncoding("utf-8");
+      resp.setHeader("content-type", "text/html;charset=utf-8");
+      
+      PrintWriter pw = resp.getWriter();
+      pw.write("Hello World!");
+      ```
+  
+  - 服务器输出字节流数据到浏览器
+  
+    - ```java
+      resp.setContentType("text/html;charset=utf-8");
+      
+      ServletOutputStream os = resp.getOutputStream();
+      os.write("你好啊".getBytes());
+      ```
