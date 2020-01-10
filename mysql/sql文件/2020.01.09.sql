@@ -58,8 +58,9 @@ WHERE EXISTS(
 
 SELECT department_name
 FROM departments d
-WHERE EXISTS(
-	SELECT *
+WHERE d.department_id in(
+	SELECT e.department_id
     FROM employees e
-    WHERE e.department_id=d.department_id
 );
+
+SELECT * FROM employees LIMIT 0,5;
