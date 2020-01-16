@@ -153,7 +153,7 @@
   - NOT NULL：非空
   - DEFAULT：默认值
   - PRIMARY KEY：主键，并且非空
-  - UNIQUE：唯一，可为空
+  - qw：唯一，可为空
   - CHECK：检查约束，mysql不支持
   - FOREIGN KEY：外键
     - 要求在从表设置外键关系
