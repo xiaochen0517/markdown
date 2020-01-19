@@ -36,7 +36,7 @@
 
   - 使用某个类中的静态方法创建对象，并存入spring容器
 
-  - ```mysql
+  - ```xml
     <bean id="myService2" class="com.lxc.factory.StaticFactory" factory-method="getMyService"></bean>
     ```
 
