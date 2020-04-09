@@ -34,8 +34,10 @@ create table account(
 # 文章分类表
 create table sort(
 	`id` int not null primary key auto_increment,
+    `uid` int not null,
+    constraint `fk_sortuid` foreign key(`uid`) references user(`id`), # 发布用户id外键
     `name` varchar(10) not null, # 名称
-    `defsort` boolean not null# 是否为默认分类
+    `defsort` boolean not null# 是否为默认分类comment
 );
 
 # 文章表
@@ -51,7 +53,8 @@ create table article(
     `sortid` int not null,
     constraint `fk_sa` foreign key(`sortid`) references sort(`id`), # 分类表外键
     `label` varchar(100) not null,# 标签
-    `content` text not null # 内容
+    `content` text not null, # 内容
+    `status` boolean not null default 1 # 文章状态
 );
 
 # 评论表
@@ -66,5 +69,42 @@ create table comment(
     `status` boolean not null default false # 评论状态
 );
 
+# 文章点赞表
+create table `like`(
+	`id` int not null primary key auto_increment,
+    `uid` int not null,
+    constraint `fk_likeuid` foreign key(`uid`) references user(`id`),# 评论文章外键
+    `aid` int not null,
+    constraint `fk_likeaid` foreign key(`aid`) references article(`id`),# 评论文章外键
+    `time` datetime not null
+);
 
+# 友链表
+create table blogroll(
+	`id` int not null primary key auto_increment,
+    `name` varchar(10) not null,
+    `link` varchar(100) not null
+);
+
+# 主页轮播图图片
+create table homephoto(
+	`id` int not null primary key auto_increment,
+	`name` varchar(10) not null,
+    `link` varchar(1000) not null
+);
+
+# 文章随机图片
+create table articlephoto(
+	`id` int not null primary key auto_increment,
+	`name` varchar(10) not null,
+    `link` varchar(1000) not null
+);
+
+# 博客基本设置表
+create table settings(
+	`id` int not null primary key auto_increment,
+    `records` varchar(20), # 备案信息
+    `perphoto` varchar(100), # 个人介绍图片
+    `percontent` text # 个人介绍文字
+);
 
