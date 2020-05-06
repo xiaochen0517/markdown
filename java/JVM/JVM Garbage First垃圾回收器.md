@@ -25,7 +25,7 @@
 
 
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段流程图.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段流程图.png)
 
 ### 1、Young Collection
 
@@ -33,15 +33,15 @@
 
 - 初始阶段，新生成的对象会进入伊甸园
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段1.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段1.png)
 
 - 在发生垃圾回收时，伊旬园中的未被回收的对象会进入幸存区
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段2.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段2.png)
 
 - 再次发生垃圾回收时，伊旬园中的未被回收的新对象会复制到一个新的幸存区（Region块），并将旧幸存区中达到指定阈值的对象复制到老年代，没有被回收且没有达到阈值的对象复制到新的幸存区
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段3.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段3.png)
 
 ### 2、Young Collection + CM
 
@@ -52,7 +52,7 @@
 -XX:InitiatingHeapOccupancyPercent=percent （默认为45%)
 ```
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段4.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段4.png)
 
 ### 3、Mixed Collection
 
@@ -67,7 +67,7 @@
 
 在此阶段伊甸园中的未被回收的对象会复制到幸存区中，同时幸存区中也会进行垃圾回收，将幸存区中未被回收的对象复制到新的幸存区中，寿命到达指定阈值的对象复制到老年代中。在回收老年代时也是同样使用复制算法，并根据设置的最大暂停时间，优先回收其中回收价值最高的部分老年代中的对象。
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段5.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段5.png)
 
 ### 4、Full GC
 
@@ -95,19 +95,19 @@
 - 在对象引用变更时通过写后屏障（Post-Write Barrier）和脏卡队列（Dirty Card Queue）
 - Remembered Set通过Concurrent Refinement Threads更新
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收跨代引用.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收跨代引用.png)
 
 ### 6、Remark
 
 在垃圾回收器进行并发标记阶段时，会在可以回收的对象上加入写屏障（Pre-Write Barrier），以防对象在标记后发生引用变化后依旧清除对象。
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段Remark写屏障.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段Remark写屏障.png)
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段Remark1.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段Remark1.png)
 
 当添加写屏障（Pre-Write Barrier）的对象发生引用变化之后，写屏障会将对象加入satb_mark_queue，在重新标记（Remark）时（会发生 STW）就会重新判断satb_mark_queue中的对象是否可以被清除。
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段Remark2.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段Remark2.png)
 
 ### 7、JDK 8u20 字符串去重
 
@@ -144,7 +144,7 @@ String s2 = new String("hello"); //char[]{'h', 'e', 'l', 'l', 'o'}
 - 回收时被优先考虑
 - G1会跟踪老年代所有incoming引用，这样老年代incoming引用为0的巨型对象就可以在新生代垃圾回收时处理掉
 
-![](E:\PerFile\notes\markdown\java\photo\jvm垃圾回收器G1垃圾回收阶段巨型对象.png)
+![](E:\PerFile\notes\markdown\java\JVM\photo\jvm垃圾回收器G1垃圾回收阶段巨型对象.png)
 
 ### 10、JDK 9 并发标记起始时间调整
 
