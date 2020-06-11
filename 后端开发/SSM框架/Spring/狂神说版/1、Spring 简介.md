@@ -38,4 +38,4 @@
 
 ## 4、`Spring` 七大模块
 
-![](photo\一、Spring简介（1）.gif).
+![](photo\1、Spring简介（1）.gif)..
