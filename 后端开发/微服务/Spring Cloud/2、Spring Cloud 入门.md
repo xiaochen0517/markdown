@@ -29,7 +29,7 @@
 - 服务注册发现
 - 熔断机制
 
-![](https://spring.io/images/cloud-diagram-1a4cad7294b4452864b5ff57175dd983.svg)
+![](Photo\上传图片 微服务架构图.svg)
 
 ### 1.2、`Spring Cloud` 和 `Spring Boot` 的关系
 
