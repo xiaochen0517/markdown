@@ -192,6 +192,117 @@ public String circuitBreakerFallbackError(Integer id){
 
 `Hystrix` 除了隔离依赖服务的调用以外， `Hystrix` 还提供了准实时的调用监控 `Hystrix Dashboard` ， `Hystrix` 会持续地记录所有通过 `Hystrix` 发起的请求的执行信息，并以统计报表和图形的形式展示给用户，包括每秒执行多少请求及成功数、失败数等。 `Netflix` 通过 `hystrix-metrics-event-stream` 项目实现类对以上指标的监控。 `Spring Cloud` 也提供了 `Hystrix Dashboard` 的整合，对监控内容转化成可视化界面。
 
+### 3.2、配置使用
+
+#### 3.2.1、新建项目
+
+新建 `maven` 项目，`cloud-consumer-hystrix-dashboard9001` 
+
+#### 3.2.2、配置 `maven` 
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <scope>runtime</scope>
+        <optional>true</optional>
+    </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <optional>true</optional>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
+
+#### 3.2.3、配置 `yaml` 
+
+```yaml
+server:
+  port: 9001
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "127.0.0.1"
+```
+
+#### 3.2.4、主启动类注释
+
+```java
+@EnableHystrixDashboard
+```
+
+#### 3.2.5、被监控配置
+
+- 新建配置类
+
+```java
+@Configuration
+public class JavaConfig {
+    @Bean
+    public ServletRegistrationBean getServlet() {
+        HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
+        registrationBean.setLoadOnStartup(1);
+        registrationBean.addUrlMappings("/actuator/hystrix.stream");//访问路径
+        registrationBean.setName("hystrix.stream");
+        return registrationBean;
+    }
+}
+```
+
+### 3.3、测试使用
+
+#### 3.3.1、访问主页
+
+![image-20200917105517986](E:\PerFile\notes\markdown\后端开发\微服务\Spring Cloud\Photo\42、Hystrix 主页面（8）.png)
+
+监控地址即为微服务地址端口路径为 `addUrlMappings()` 配置中的路径。
+
+![image-20200917105419348](E:\PerFile\notes\markdown\后端开发\微服务\Spring Cloud\Photo\43、Hystrix 监控页面（8）.png)
+
+
+
+`Citcuit` 中每一种颜色的数字代表的含义即为右上角的相同颜色的内容。
+
+**实心圆：** 
+
+- 通过颜色变化代表实例的健康程度
+  - 绿色>黄色>橙色>红色
+- 大小会随着实例请求流量的变化而变化，流量越大圆就会越大
+
+**曲线：** 
+
+- 用来记录两分钟内流量的相对变化
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -120,7 +120,7 @@ except FileNotFoundError:
 
 ## 四、自定义异常
 
-在Python中，抛出自定义异常的语法为`raise 异常对象`
+在Python中，抛出自定义异常的语法为`raise 异常对象` 
 
 ```python
 class PassWordError(Exception):
