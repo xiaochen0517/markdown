@@ -11,3 +11,4 @@ npm i babel-loader @babel/core @babel/preset-env -D
 npm i @babel/polyfill -D
 
 npm install core-js regenerator-runtime -D
+
